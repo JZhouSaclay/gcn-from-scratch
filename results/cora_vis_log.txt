@@ -1,0 +1,112 @@
+2026-03-16 17:17:25.969 python[34616:262180104] +[IMKClient subclass]: chose IMKClient_Modern
+2026-03-16 17:17:26.772 python[34616:262180104] The class 'NSSavePanel' overrides the method identifier.  This method is implemented by class 'NSWindow'
+2026-03-16 17:17:26.815 python[34616:262180104] +[IMKInputSession subclass]: chose IMKInputSession_Modern
+
+======================================================================
+         t-SNE Visualization of GCN Hidden Features
+======================================================================
+
+This script will:
+  1. Train a GCN model on CORA dataset
+  2. Extract hidden layer features
+  3. Apply t-SNE to reduce to 2D
+  4. Visualize the node embeddings colored by class
+
+Loading cora dataset...
+Dataset already exists at /Users/jiezhou/Agent/ClaudeCode/gcn-from-scratch/data/cora/raw
+Parsing content file: /Users/jiezhou/Agent/ClaudeCode/gcn-from-scratch/data/cora/raw/cora.content
+  Loaded 2708 papers
+  Feature dimension: 1433
+  Number of classes: 7
+Parsing cites file: /Users/jiezhou/Agent/ClaudeCode/gcn-from-scratch/data/cora/raw/cora.cites
+  Loaded 5429 citation edges
+Dataset split:
+  Train: 140 nodes (20 per class × 7 classes)
+  Val: 500 nodes
+  Test: 1000 nodes
+  Unlabeled: 1068 nodes
+Dataset loaded: 2708 nodes, 1433 features
+Classes: Case Based, Genetic Algorithms, Neural Networks, Probabilistic Methods, Reinforcement Learning, Rule Learning, Theory
+
+Training GCN model...
+
+============================================================
+Training Started
+============================================================
+Epochs: 200 | LR: 0.01 | Weight Decay: 0.0005
+Patience: 50 | Device: cpu
+------------------------------------------------------------
+Epoch   1/200 | Train Loss: 1.9720 | Train Acc: 0.1500 | Val Loss: 1.8750 | Val Acc: 0.3260
+Epoch  10/200 | Train Loss: 1.8153 | Train Acc: 0.4786 | Val Loss: 1.8292 | Val Acc: 0.5060
+Epoch  20/200 | Train Loss: 1.5270 | Train Acc: 0.6786 | Val Loss: 1.7098 | Val Acc: 0.4860
+Epoch  30/200 | Train Loss: 1.1950 | Train Acc: 0.8357 | Val Loss: 1.5001 | Val Acc: 0.6700
+Epoch  40/200 | Train Loss: 0.8288 | Train Acc: 0.9143 | Val Loss: 1.2635 | Val Acc: 0.7420
+Epoch  50/200 | Train Loss: 0.5793 | Train Acc: 0.9357 | Val Loss: 1.0610 | Val Acc: 0.7540
+Epoch  60/200 | Train Loss: 0.3947 | Train Acc: 0.9714 | Val Loss: 0.9307 | Val Acc: 0.7580
+Epoch  70/200 | Train Loss: 0.3102 | Train Acc: 0.9714 | Val Loss: 0.8398 | Val Acc: 0.7760
+Epoch  80/200 | Train Loss: 0.2431 | Train Acc: 0.9643 | Val Loss: 0.7987 | Val Acc: 0.7740
+Epoch  90/200 | Train Loss: 0.2202 | Train Acc: 0.9786 | Val Loss: 0.7684 | Val Acc: 0.7780
+Epoch 100/200 | Train Loss: 0.1778 | Train Acc: 1.0000 | Val Loss: 0.7427 | Val Acc: 0.7780
+Epoch 110/200 | Train Loss: 0.1466 | Train Acc: 0.9929 | Val Loss: 0.7165 | Val Acc: 0.7820
+Epoch 120/200 | Train Loss: 0.1361 | Train Acc: 1.0000 | Val Loss: 0.6869 | Val Acc: 0.7840
+Epoch 130/200 | Train Loss: 0.1578 | Train Acc: 0.9857 | Val Loss: 0.6810 | Val Acc: 0.7920
+Epoch 140/200 | Train Loss: 0.1161 | Train Acc: 0.9929 | Val Loss: 0.6886 | Val Acc: 0.7800
+Epoch 150/200 | Train Loss: 0.1498 | Train Acc: 0.9929 | Val Loss: 0.6607 | Val Acc: 0.7940
+Epoch 160/200 | Train Loss: 0.0990 | Train Acc: 0.9929 | Val Loss: 0.6724 | Val Acc: 0.7860
+Epoch 170/200 | Train Loss: 0.1047 | Train Acc: 1.0000 | Val Loss: 0.6483 | Val Acc: 0.7960
+Epoch 180/200 | Train Loss: 0.1070 | Train Acc: 0.9929 | Val Loss: 0.6654 | Val Acc: 0.7840
+Epoch 190/200 | Train Loss: 0.0883 | Train Acc: 1.0000 | Val Loss: 0.6499 | Val Acc: 0.7960
+
+Early stopping triggered at epoch 199
+Best validation accuracy: 0.8000 at epoch 149
+
+============================================================
+Training Completed
+============================================================
+Best Epoch: 149
+Training Time: 2.84s
+Final Train Acc: 1.0000
+Final Val Acc:   0.8000
+Final Test Acc:  0.8090
+============================================================
+
+Training complete! Test accuracy: 80.90%
+
+Extracting hidden layer features...
+
+Applying t-SNE dimensionality reduction...
+  Input shape: (2708, 16)
+  Output shape: (2708, 2)
+
+✓ Visualization saved to: results/cora_tsne.png
+
+============================================================
+                    Clustering Analysis
+============================================================
+
+Intra-cluster Compactness (lower = more compact):
+------------------------------------------------------------
+  Case Based                16.674
+  Genetic Algorithms        14.263
+  Neural Networks           21.188
+  Probabilistic Methods     17.932
+  Reinforcement Learning    13.434
+  Rule Learning             13.028
+  Theory                    17.927
+  Average                   16.349
+
+Inter-cluster Separation (higher = more separated):
+------------------------------------------------------------
+  Average distance between centers: 50.533
+  Minimum distance between centers: 27.883
+
+Clustering Quality Score:
+  Separation/Compactness ratio: 3.091
+  (Higher values indicate better clustering)
+
+============================================================
+
+======================================================================
+Visualization complete!
+Saved to: results/cora_tsne.png
+======================================================================

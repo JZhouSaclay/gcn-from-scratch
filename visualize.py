@@ -4,18 +4,20 @@ t-SNE Visualization of GCN Hidden Features
 Visualize the node embeddings learned by the first GCN layer.
 
 This script:
-1. Trains a GCN model on Cora dataset
-2. Extracts the 16-dimensional hidden layer features
+1. Trains a GCN model on citation network dataset
+2. Extracts the hidden layer features
 3. Uses t-SNE to project them to 2D
-4. Plots the results with 7 different colors for each class
+4. Plots the results with different colors for each class
 
 Usage:
-    python visualize.py
+    python visualize.py --dataset cora
+    python visualize.py --dataset citeseer
 
 Output:
-    results/cora_tsne.png
+    results/{dataset}_tsne.png
 """
 
+import argparse
 import os
 import torch
 import torch.nn.functional as F
@@ -23,10 +25,76 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
-from src.data_loader import CoraDataLoader
+from src.data_loader import CoraDataLoader, CiteSeerDataLoader
 from src.model import GCN
 from src.train import train_gcn
 from src.utils import set_seed
+
+
+def parse_arguments():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description='t-SNE Visualization of GCN Hidden Features'
+    )
+
+    parser.add_argument(
+        '--dataset',
+        type=str,
+        default='cora',
+        choices=['cora', 'citeseer'],
+        help='Dataset to use (default: cora)'
+    )
+
+    parser.add_argument(
+        '--hidden',
+        type=int,
+        default=None,
+        help='Number of hidden units (default: 16 for cora, 32 for citeseer)'
+    )
+
+    parser.add_argument(
+        '--epochs',
+        type=int,
+        default=200,
+        help='Number of training epochs (default: 200)'
+    )
+
+    parser.add_argument(
+        '--lr',
+        type=float,
+        default=0.01,
+        help='Learning rate (default: 0.01)'
+    )
+
+    parser.add_argument(
+        '--weight_decay',
+        type=float,
+        default=5e-4,
+        help='L2 regularization (default: 5e-4)'
+    )
+
+    parser.add_argument(
+        '--dropout',
+        type=float,
+        default=0.5,
+        help='Dropout rate (default: 0.5)'
+    )
+
+    parser.add_argument(
+        '--patience',
+        type=int,
+        default=50,
+        help='Early stopping patience (default: 50)'
+    )
+
+    parser.add_argument(
+        '--seed',
+        type=int,
+        default=42,
+        help='Random seed (default: 42)'
+    )
+
+    return parser.parse_args()
 
 
 def extract_hidden_features(model, x, adj):
@@ -227,34 +295,49 @@ def analyze_clustering(features_2d, labels, class_names):
 
 def main():
     """Main execution function for visualization."""
+    args = parse_arguments()
+
     print("\n" + "="*70)
     print("         t-SNE Visualization of GCN Hidden Features")
     print("="*70)
     print()
     print("This script will:")
-    print("  1. Train a GCN model on Cora dataset")
-    print("  2. Extract 16-dimensional hidden layer features")
+    print(f"  1. Train a GCN model on {args.dataset.upper()} dataset")
+    print("  2. Extract hidden layer features")
     print("  3. Apply t-SNE to reduce to 2D")
     print("  4. Visualize the node embeddings colored by class")
     print()
 
     # Configuration
     DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    SEED = 42
-    EPOCHS = 200
-    LR = 0.01
-    WEIGHT_DECAY = 5e-4
-    PATIENCE = 50
-    HIDDEN = 16
-    DROPOUT = 0.5
-    SAVE_PATH = 'results/cora_tsne.png'
+    SEED = args.seed
+    EPOCHS = args.epochs
+    LR = args.lr
+    WEIGHT_DECAY = args.weight_decay
+    PATIENCE = args.patience
+    DROPOUT = args.dropout
+
+    # Set hidden size based on dataset if not provided
+    if args.hidden is None:
+        HIDDEN = 32 if args.dataset == 'citeseer' else 16
+    else:
+        HIDDEN = args.hidden
+
+    # Dynamic save path
+    SAVE_PATH = f'results/{args.dataset}_tsne.png'
 
     # Set random seed
     set_seed(SEED)
 
-    # Load Cora dataset
-    print("Loading Cora dataset...")
-    loader = CoraDataLoader()
+    # Load dataset
+    print(f"Loading {args.dataset} dataset...")
+    if args.dataset == 'cora':
+        loader = CoraDataLoader()
+    elif args.dataset == 'citeseer':
+        loader = CiteSeerDataLoader()
+    else:
+        raise ValueError(f"Unknown dataset: {args.dataset}")
+
     data = loader.load()
 
     # Move data to device

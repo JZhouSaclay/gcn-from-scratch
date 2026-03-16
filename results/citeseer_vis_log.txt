@@ -1,0 +1,90 @@
+
+======================================================================
+         t-SNE Visualization of GCN Hidden Features
+======================================================================
+
+This script will:
+  1. Train a GCN model on CITESEER dataset
+  2. Extract hidden layer features
+  3. Apply t-SNE to reduce to 2D
+  4. Visualize the node embeddings colored by class
+
+Loading citeseer dataset...
+Dataset split:
+  Train: 120 nodes (20 per class × 6 classes)
+  Val: 500 nodes
+  Test: 1000 nodes
+  Unlabeled: 1692 nodes
+Dataset loaded: 3312 nodes, 3703 features
+Classes: Class 0, Class 1, Class 2, Class 3, Class 4, Class 5
+
+Training GCN model...
+
+============================================================
+Training Started
+============================================================
+Epochs: 200 | LR: 0.01 | Weight Decay: 0.0005
+Patience: 50 | Device: cpu
+------------------------------------------------------------
+Epoch   1/200 | Train Loss: 1.7996 | Train Acc: 0.1833 | Val Loss: 1.8358 | Val Acc: 0.0740
+Epoch  10/200 | Train Loss: 1.1580 | Train Acc: 0.8833 | Val Loss: 1.5447 | Val Acc: 0.5960
+Epoch  20/200 | Train Loss: 0.4111 | Train Acc: 0.9750 | Val Loss: 1.2069 | Val Acc: 0.6860
+Epoch  30/200 | Train Loss: 0.1210 | Train Acc: 1.0000 | Val Loss: 1.0720 | Val Acc: 0.7000
+Epoch  40/200 | Train Loss: 0.0965 | Train Acc: 1.0000 | Val Loss: 1.0400 | Val Acc: 0.7020
+Epoch  50/200 | Train Loss: 0.0708 | Train Acc: 1.0000 | Val Loss: 1.0160 | Val Acc: 0.6980
+Epoch  60/200 | Train Loss: 0.0780 | Train Acc: 1.0000 | Val Loss: 1.0017 | Val Acc: 0.6920
+Epoch  70/200 | Train Loss: 0.0797 | Train Acc: 1.0000 | Val Loss: 0.9925 | Val Acc: 0.7000
+Epoch  80/200 | Train Loss: 0.0641 | Train Acc: 1.0000 | Val Loss: 0.9883 | Val Acc: 0.6940
+
+Early stopping triggered at epoch 84
+Best validation accuracy: 0.7080 at epoch 34
+
+============================================================
+Training Completed
+============================================================
+Best Epoch: 34
+Training Time: 2.34s
+Final Train Acc: 1.0000
+Final Val Acc:   0.7080
+Final Test Acc:  0.7060
+============================================================
+
+Training complete! Test accuracy: 70.60%
+
+Extracting hidden layer features...
+
+Applying t-SNE dimensionality reduction...
+  Input shape: (3312, 32)
+  Output shape: (3312, 2)
+
+✓ Visualization saved to: results/citeseer_tsne.png
+
+============================================================
+                    Clustering Analysis
+============================================================
+
+Intra-cluster Compactness (lower = more compact):
+------------------------------------------------------------
+  Class 0                   35.859
+  Class 1                   21.633
+  Class 2                   26.589
+  Class 3                   25.069
+  Class 4                   26.930
+  Class 5                   29.447
+  Average                   27.588
+
+Inter-cluster Separation (higher = more separated):
+------------------------------------------------------------
+  Average distance between centers: 48.643
+  Minimum distance between centers: 4.338
+
+Clustering Quality Score:
+  Separation/Compactness ratio: 1.763
+  (Higher values indicate better clustering)
+
+============================================================
+
+======================================================================
+Visualization complete!
+Saved to: results/citeseer_tsne.png
+======================================================================

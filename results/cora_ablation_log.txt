@@ -1,0 +1,165 @@
+
+======================================================================
+              ABLATION STUDY: MLP vs GCN on CORA
+======================================================================
+
+Purpose: Demonstrate the importance of graph convolution by comparing
+         a standard MLP (no graph structure) vs GCN (with neighbors).
+
+Controlled Variables:
+  • Same layer dimensions
+  • Same hyperparameters: lr=0.01, weight_decay=0.0005, patience=50
+  • Same data split proportions
+  • Same random seed for reproducibility
+
+Configuration:
+  Dataset: cora
+  Device: cpu
+  Hidden Units: 16
+  Epochs: 200
+  Learning Rate: 0.01
+  Weight Decay: 0.0005
+  Patience: 50
+
+Loading cora dataset...
+Dataset already exists at /Users/jiezhou/Agent/ClaudeCode/gcn-from-scratch/data/cora/raw
+Parsing content file: /Users/jiezhou/Agent/ClaudeCode/gcn-from-scratch/data/cora/raw/cora.content
+  Loaded 2708 papers
+  Feature dimension: 1433
+  Number of classes: 7
+Parsing cites file: /Users/jiezhou/Agent/ClaudeCode/gcn-from-scratch/data/cora/raw/cora.cites
+  Loaded 5429 citation edges
+Dataset split:
+  Train: 140 nodes (20 per class × 7 classes)
+  Val: 500 nodes
+  Test: 1000 nodes
+  Unlabeled: 1068 nodes
+Dataset loaded: 2708 nodes, 1433 features
+
+Model Parameters:
+  GCN: 23,063 parameters
+  MLP: 23,063 parameters
+
+
+============================================================
+Training GCN (Graph Convolutional Network)
+============================================================
+
+============================================================
+Training Started
+============================================================
+Epochs: 200 | LR: 0.01 | Weight Decay: 0.0005
+Patience: 50 | Device: cpu
+------------------------------------------------------------
+Epoch   1/200 | Train Loss: 1.9551 | Train Acc: 0.2214 | Val Loss: 1.9005 | Val Acc: 0.3220
+Epoch  10/200 | Train Loss: 1.7755 | Train Acc: 0.4786 | Val Loss: 1.7940 | Val Acc: 0.4600
+Epoch  20/200 | Train Loss: 1.4213 | Train Acc: 0.7929 | Val Loss: 1.5724 | Val Acc: 0.6660
+Epoch  30/200 | Train Loss: 0.9968 | Train Acc: 0.9143 | Val Loss: 1.3055 | Val Acc: 0.7720
+Epoch  40/200 | Train Loss: 0.6273 | Train Acc: 0.9357 | Val Loss: 1.0438 | Val Acc: 0.7900
+Epoch  50/200 | Train Loss: 0.3923 | Train Acc: 0.9571 | Val Loss: 0.8865 | Val Acc: 0.7800
+Epoch  60/200 | Train Loss: 0.3023 | Train Acc: 0.9714 | Val Loss: 0.7939 | Val Acc: 0.7860
+Epoch  70/200 | Train Loss: 0.2240 | Train Acc: 0.9857 | Val Loss: 0.7447 | Val Acc: 0.7900
+Epoch  80/200 | Train Loss: 0.2088 | Train Acc: 0.9857 | Val Loss: 0.7130 | Val Acc: 0.7840
+Epoch  90/200 | Train Loss: 0.1699 | Train Acc: 0.9929 | Val Loss: 0.7016 | Val Acc: 0.7920
+Epoch 100/200 | Train Loss: 0.1610 | Train Acc: 1.0000 | Val Loss: 0.6881 | Val Acc: 0.7920
+
+Early stopping triggered at epoch 108
+Best validation accuracy: 0.7940 at epoch 58
+
+============================================================
+Training Completed
+============================================================
+Best Epoch: 58
+Training Time: 1.50s
+Final Train Acc: 0.9857
+Final Val Acc:   0.7940
+Final Test Acc:  0.7970
+============================================================
+
+============================================================
+Training MLP (Multi-Layer Perceptron)
+============================================================
+
+============================================================
+Training Started
+============================================================
+Epochs: 200 | LR: 0.01 | Weight Decay: 0.0005
+Patience: 50 | Device: cpu
+------------------------------------------------------------
+Epoch   1/200 | Train Loss: 1.9512 | Train Acc: 0.1429 | Val Loss: 1.9336 | Val Acc: 0.1380
+Epoch  10/200 | Train Loss: 1.7365 | Train Acc: 0.5429 | Val Loss: 1.8919 | Val Acc: 0.2400
+Epoch  20/200 | Train Loss: 1.2225 | Train Acc: 0.7643 | Val Loss: 1.7658 | Val Acc: 0.3660
+Epoch  30/200 | Train Loss: 0.7098 | Train Acc: 0.8857 | Val Loss: 1.6116 | Val Acc: 0.4720
+Epoch  40/200 | Train Loss: 0.4915 | Train Acc: 0.9000 | Val Loss: 1.4864 | Val Acc: 0.5180
+Epoch  50/200 | Train Loss: 0.4004 | Train Acc: 0.8786 | Val Loss: 1.4286 | Val Acc: 0.5140
+Epoch  60/200 | Train Loss: 0.3571 | Train Acc: 0.9143 | Val Loss: 1.4075 | Val Acc: 0.5160
+Epoch  70/200 | Train Loss: 0.2829 | Train Acc: 0.9500 | Val Loss: 1.3935 | Val Acc: 0.5220
+Epoch  80/200 | Train Loss: 0.2751 | Train Acc: 0.9286 | Val Loss: 1.3964 | Val Acc: 0.5220
+Epoch  90/200 | Train Loss: 0.3203 | Train Acc: 0.8714 | Val Loss: 1.3942 | Val Acc: 0.5100
+Epoch 100/200 | Train Loss: 0.2182 | Train Acc: 0.9643 | Val Loss: 1.3863 | Val Acc: 0.5080
+Epoch 110/200 | Train Loss: 0.3432 | Train Acc: 0.8786 | Val Loss: 1.3842 | Val Acc: 0.5080
+
+Early stopping triggered at epoch 113
+Best validation accuracy: 0.5260 at epoch 63
+
+============================================================
+Training Completed
+============================================================
+Best Epoch: 63
+Training Time: 0.31s
+Final Train Acc: 1.0000
+Final Val Acc:   0.5260
+Final Test Acc:  0.5330
+============================================================
+
+======================================================================
+                    ABLATION STUDY: MLP vs GCN on CORA
+======================================================================
+
+Model Architecture Comparison:
+----------------------------------------------------------------------
+Layer                MLP                       GCN                      
+----------------------------------------------------------------------
+Layer 1              Linear(1433, 16)          GraphConv(1433, 16)      
+Activation           ReLU                      ReLU                     
+Dropout              p=0.5                     p=0.5                    
+Layer 2              Linear(16, 7)             GraphConv(16, 7)         
+Parameters                 23,063                   23,063            
+----------------------------------------------------------------------
+
+Key Difference:
+  • MLP: Each node is classified INDEPENDENTLY (no neighbor info)
+  • GCN: Each node AGGREGATES features from its neighbors
+
+======================================================================
+                         RESULTS SUMMARY
+======================================================================
+
+Metric                                     MLP             GCN     Improvement
+----------------------------------------------------------------------
+Train Accuracy                         100.00%          98.57%             N/A
+Validation Accuracy                     52.60%          79.40%             N/A
+Test Accuracy                           53.30%          79.70%         +26.40%
+Best Epoch                                  63              58             N/A
+Training Time (s)                         0.31            1.50             N/A
+----------------------------------------------------------------------
+
+======================================================================
+                           ANALYSIS
+======================================================================
+
+✓ GCN outperforms MLP by 26.40% on test accuracy!
+
+This demonstrates the power of graph convolution:
+  • GCN leverages neighbor information through adjacency matrix
+  • Each node's feature is a weighted average of its neighbors
+  • This 'homophily' assumption works well on citation networks:
+    'Papers citing similar papers have similar topics'
+
+Training vs Test Gap Analysis:
+  • Train gap: -1.43% (GCN worse on training)
+  • Test gap:  +26.40% (GCN better on testing)
+  • The test improvement is larger than train improvement,
+    suggesting graph structure provides better generalization!
+
+======================================================================
