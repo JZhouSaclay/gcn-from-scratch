@@ -1,0 +1,20 @@
+# GCN From Scratch - Dependencies
+# =================================
+# Minimal dependencies - only PyTorch and basic scientific computing
+
+# Core dependency - deep learning framework
+torch>=1.9.0
+
+# Numerical computations
+numpy>=1.19.0
+
+# Optional: Used only for data loading efficiency
+# (can be removed if using pure PyTorch for everything)
+scipy>=1.5.0
+
+# Optional: For visualization and analysis
+# matplotlib>=3.3.0
+# networkx>=2.5
+
+# Optional: For progress bars during training
+# tqdm>=4.50.0

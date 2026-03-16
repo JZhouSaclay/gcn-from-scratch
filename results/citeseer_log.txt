@@ -1,0 +1,92 @@
+
+============================================================
+GCN From Scratch - Training Configuration
+============================================================
+Device: cpu
+Dataset: citeseer
+Hidden Units: 32
+Epochs: 200
+Learning Rate: 0.01
+Weight Decay: 0.0005
+Dropout: 0.5
+Seed: 42
+============================================================
+
+[Step 1/4] Loading dataset...
+Downloading CiteSeer dataset...
+Download complete!
+Dataset split:
+  Train: 120 nodes (20 per class × 6 classes)
+  Val: 500 nodes
+  Test: 1000 nodes
+  Unlabeled: 1692 nodes
+Dataset Loaded:
+  Nodes: 3312
+  Features: 3703
+  Classes: 6
+  Train: 120 nodes
+  Val: 500 nodes
+  Test: 1000 nodes
+
+[Step 2/4] Building GCN model...
+Model Architecture:
+  Input Layer: 3703 -> 32
+  Hidden Layer: 32 -> 6
+  Total Parameters: 118,726
+  Trainable Parameters: 118,726
+
+[Step 3/4] Starting training...
+
+============================================================
+Training Started
+============================================================
+Epochs: 200 | LR: 0.01 | Weight Decay: 0.0005
+Patience: 100 | Device: cpu
+------------------------------------------------------------
+Epoch   1/200 | Train Loss: 1.7996 | Train Acc: 0.1833 | Val Loss: 1.8358 | Val Acc: 0.0740
+Epoch  10/200 | Train Loss: 1.1580 | Train Acc: 0.8833 | Val Loss: 1.5447 | Val Acc: 0.5960
+Epoch  20/200 | Train Loss: 0.4111 | Train Acc: 0.9750 | Val Loss: 1.2069 | Val Acc: 0.6860
+Epoch  30/200 | Train Loss: 0.1210 | Train Acc: 1.0000 | Val Loss: 1.0720 | Val Acc: 0.7000
+Epoch  40/200 | Train Loss: 0.0965 | Train Acc: 1.0000 | Val Loss: 1.0400 | Val Acc: 0.7020
+Epoch  50/200 | Train Loss: 0.0708 | Train Acc: 1.0000 | Val Loss: 1.0160 | Val Acc: 0.6980
+Epoch  60/200 | Train Loss: 0.0780 | Train Acc: 1.0000 | Val Loss: 1.0017 | Val Acc: 0.6920
+Epoch  70/200 | Train Loss: 0.0797 | Train Acc: 1.0000 | Val Loss: 0.9925 | Val Acc: 0.7000
+Epoch  80/200 | Train Loss: 0.0641 | Train Acc: 1.0000 | Val Loss: 0.9883 | Val Acc: 0.6940
+Epoch  90/200 | Train Loss: 0.0667 | Train Acc: 1.0000 | Val Loss: 0.9817 | Val Acc: 0.6920
+Epoch 100/200 | Train Loss: 0.0682 | Train Acc: 1.0000 | Val Loss: 0.9917 | Val Acc: 0.6920
+Epoch 110/200 | Train Loss: 0.0541 | Train Acc: 1.0000 | Val Loss: 0.9760 | Val Acc: 0.7040
+Epoch 120/200 | Train Loss: 0.0686 | Train Acc: 1.0000 | Val Loss: 0.9896 | Val Acc: 0.6980
+Epoch 130/200 | Train Loss: 0.0479 | Train Acc: 1.0000 | Val Loss: 0.9788 | Val Acc: 0.7060
+Epoch 140/200 | Train Loss: 0.0455 | Train Acc: 1.0000 | Val Loss: 0.9872 | Val Acc: 0.7000
+Epoch 150/200 | Train Loss: 0.0438 | Train Acc: 1.0000 | Val Loss: 1.0030 | Val Acc: 0.6900
+Epoch 160/200 | Train Loss: 0.0431 | Train Acc: 1.0000 | Val Loss: 0.9905 | Val Acc: 0.6960
+Epoch 170/200 | Train Loss: 0.0453 | Train Acc: 1.0000 | Val Loss: 0.9903 | Val Acc: 0.6980
+Epoch 180/200 | Train Loss: 0.0384 | Train Acc: 1.0000 | Val Loss: 0.9853 | Val Acc: 0.7080
+Epoch 190/200 | Train Loss: 0.0408 | Train Acc: 1.0000 | Val Loss: 0.9889 | Val Acc: 0.7000
+Epoch 200/200 | Train Loss: 0.0373 | Train Acc: 1.0000 | Val Loss: 0.9851 | Val Acc: 0.7060
+
+============================================================
+Training Completed
+============================================================
+Best Epoch: 132
+Training Time: 7.25s
+Final Train Acc: 1.0000
+Final Val Acc:   0.7100
+Final Test Acc:  0.6910
+============================================================
+
+[Step 4/4] Final Evaluation on Test Set
+============================================================
+
+Test Set Results:
+  Correct Predictions: 691/1000
+  Test Accuracy: 0.6910 (69.10%)
+
+Comparison with Paper:
+  Paper (Kipf & Welling 2017): 70.3%
+  Our Implementation:          69.10%
+  Difference:                  -1.20%
+
+============================================================
+Training Pipeline Completed!
+============================================================
